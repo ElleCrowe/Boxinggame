@@ -1,75 +1,83 @@
+import javax.swing.plaf.basic.BasicSliderUI.ActionScroller;
+
 import greenfoot.*;
 
-public class PowerUp extends Actor {
-    protected int energyBoost;
-
-    public PowerUp(int energyBoost) {
-        this.energyBoost = energyBoost;
-    } 
-
-public void act() {
-    checkCollision();
-}
-
-protected void checkCollision() {
-    if (isTouching(Player.class)) {
-        Player player = (Player) getOneIntersectingObject(Player.class);
-        applyPowerUp(player);
-        getWorld().removeObject(this);
+public void collectPowerUp()
+{
+    if (isTouching(PowerUps.class))
+    {
+        removeTouching(PowerUps.class);
     }
 }
 
-protected void applyPowerUp(Player player) {
-    player.applyEnergyBoost(energyBoost);
-    }
+public class PowerUps extends Actor
+{
+    int LineScaleDown;
+    int acrossScaleDown;
+
+
+public void act()
+{
 
 }
 
-    public class WaterBottle extends PowerUp {
-        public WaterBottle() {
-            super(5);
-            setImage(new GreenfootImage("water_bottle.png"));
-        }
-    }
+public void scaleDownImage(int x, int y)
+{
+    // put the scaling factors instead of 'x' and 'y'
+    lineScaleDown = x;
+    acrossScaleDown = y;
 
-    public class ProteinBar extends PowerUp {
-        public ProteinBar() {
-            super(10);
-            setImage(new GreenfootImage("protein_bar.png"));
-        }
-    }
+    //Scaling the image down so its small
+    // the getWidth and height methods are used to scale down the image eg dividing height and width
+    getImage().scale(getImage().getWidth()/LineScaleDown, getImage().getHeight()/acrossScaleDown);
+}
+}
 
-public class ChickenLeg extends PowerUp {
-    public ChickenLeg() {
-        super(20);
-        setImage(new GreenfootImage("chicken.leg.png"));
+public class WaterBottle extends PowerUps 
+{
+    int healthBoost = 5;
+    public WaterBottle()
+    {
+        //resizes the image
+        scaleDownImage(x,y);
     }
 }
 
-public class Player extends Actor (
-    private int energy = 100;
-
-    public void act() {
-        checkCollisionWithPowerUps();
-}
-
-private void checkCollisionWithPowerUps() {
-    if (isTouching(PowerUp.class)) {
-        PowerUp powerUp = (PowerUp) getOneIntersectingObject(PowerUp.class);
-        applyEnergyBoost(powerUp.getEnergyBoost());
-        getWorld().removeObject(powerUp);
-    
+Public class ProteinBar extends PowerUps
+{
+    int healthBoost = 10;
+    public ProteinBar()
+    {
+        //resizes the image
+        scaleDownImage(x,y);
     }
 }
 
-public void applyEnergyBoost(int Boost) {
-    energy += (energy*boost) /100;
-
-    //add any other actions for when the player/ actor gets boost. OR obtains powerups.
-
+public class ChickenLeg extends PowerUps
+{
+    int healthBoost = 10;
+    public ChickenLeg()
+    {
+        //resizes the image
+        scaleDownImage(x,y);
     }
+}
 
-)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -112,54 +120,8 @@ public class HealthBar extends Actor {
      }
 
 
-public class EnergyBar extends Actor {
-    private int energy = 100;
-    private int energyBarHeight;  //height of the energybar in pixels
-    private int energyBarWidth;   // height of the energy bar in pixels
-    private int pixelsPerEnergyPoint;
-    private int energyRegenerationRate = 2; //2% energy regen every 10 seconds 
-
-public EnergyBar (int barWidth, int barHeight) {
-        energyBarWidth = barWidth;
-        energyBarHeight = barHeight;
-
-        calculatePixelsPerEnergyPoint();  
-        updateImage();
-    }
-
-public void loseEnergyOnPunch() {
-    loseEnergy(5);
-}
-
- private void loseEnergy(int amount) {
-        energy -= amount;
-        energy = Math.max(0, energy);  //This is so the energy never goes below 0
-        updateImage();
-    }
-
-private void regenerateEnergy() {
-    energy += energyRegenerationRate;
-    energy = Math.max(100, energy); 
-    updateImage();
-}
-
-private void calculatePixelsPerEnergyPoint() {
-    pixelsPerEnergyPoint = Math.max(1, energyBarWidth / 5);
-
-    }
-
-    private void updateImage() {
-    GreenfootImage image = new GreenfootImage(energyBarWidth, energyBarHeight);
-    image.setColor(Colour.BLUE);
 
 
-
-}
-
-
-}
-    
-     
 
    
 

@@ -1,0 +1,49 @@
+public class healthManager extends Actor {
+    private World world;
+    
+    private HealthBar enemyHealthBar = new HealthBar();
+    private HealthBar playerHealthBar = new HealthBar();
+    
+    private int enemyHealth= 100;
+    private int playerHealth = 100;
+    
+    
+    public healthManager(World world) {
+        this.world = world;
+        //
+        initalize();
+    }
+    
+    
+    public void initalize() {
+        world.addObject(enemyHealthBar, 40, 10);
+        world.addObject(playerHealthBar, 80, 10);
+    }
+    
+    
+    public void updateEnemyhealth() {
+        enemyHealth--;
+        enemyHealthBar.setHealth(enemyHealth);
+        
+        if (enemyHealth <=0) {
+            //You win!
+        }
+    }
+    
+    public void updatePlayerHealth() {
+        playerHealth--; 
+        playerHealthBar.setHealth(playerHealth);
+        if (playerHealth <=0) {
+            //Game Over!
+        }
+    }
+    
+    /**
+     * Act - do whatever the healthManager wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public void act()
+    {
+        // Add your action code here.
+    }
+}

@@ -1,0 +1,104 @@
+public class EnemyStance extends Actor { 
+    
+    private static final int MOVE_SPEED = 4;
+    private HealthBar HealthBar;
+
+ public void act() {
+        moveRandomly();
+        handleRandomPunch();
+        //hitByGamer();
+}
+
+   int count;
+    int health = 100; 
+    // time player has to move away from enemy before health reduces again
+    private final int PUNCH_TIMEOUT = 50;
+    public int punchTimer = 0;
+    private Boxing myworld;
+    healthManager healthManager;
+    
+    Gamer gamer;
+
+public class Gamer extends Actor {
+    private HealthBar healthBar;
+    HealthBar EnemyHealthBar = new HealthBar();
+    private Boxing myworld;
+    
+
+    public Gamer(HealthBar healthBar) {
+        this.healthBar = healthBar;
+    }
+
+    public void act() {
+        handlePunch();
+        checkCollision();
+    }
+    
+    @Override 
+    protected void addedToWorld(World world) { 
+        // get all the base stuff done first.
+        super.addedToWorld(world);
+        
+ 
+        Boxing homeWorld = (Boxing)world;
+        this.myworld = homeWorld;
+        healthManager = myworld.getHealthManager();
+    }
+    
+    healthManager healthManager;
+
+    private void handlePunch() {
+        // Your punch handling logic
+        // Example: setImage("gamer_punch.png");
+    }
+
+    private void checkCollision() {
+        // Your collision handling logic
+        // Example: healthBar.updateHealth(newHealthValue);
+    }
+}
+
+
+    private void moveRandomly() {
+        int randomDirection = Greenfoot.getRandomNumber(4); // 0: Left, 1: Right, 2: Up, 3: Down
+
+        switch (randomDirection) {
+            case 0:
+                moveLeft();
+                break;
+            case 1:
+                moveRight();
+                break;
+            case 2:
+                moveUp();
+                break;
+            case 3:
+                moveDown();
+                break;
+        }
+    }
+
+    private void moveLeft() {
+        setLocation(getX() - MOVE_SPEED, getY());
+    }
+
+    private void moveRight() {
+        setLocation(getX() + MOVE_SPEED, getY());
+    }
+
+    private void moveUp() {
+        setLocation(getX(), getY() - MOVE_SPEED);
+    }
+
+    private void moveDown() {
+        setLocation(getX(), getY() + MOVE_SPEED);
+    }
+
+    private void handleRandomPunch() {
+        if (Greenfoot.getRandomNumber(100) < 5) {
+            setImage("enemy punch.png"); // Punch with a 5% probability
+        } else {
+            setImage("enemy stance.png");
+        }
+    }
+}

@@ -1,0 +1,44 @@
+ int health = 100;
+    int healthBarWidth = 100;
+    int healthBarHeight = 10;
+    int pixelsPerHealthPoint = (int)healthBarWidth/health;
+    
+ public void setHealth(int value) {
+        health = value;
+    }
+    
+        
+ public HealthBar()
+    {
+        setImage(new GreenfootImage(healthBarWidth + 2,healthBarHeight + 2));
+        GreenfootImage myImage = getImage();
+        myImage.setColor(Color.WHITE);
+        myImage.drawRect(0,0, healthBarWidth + 1, healthBarHeight + 1);
+        myImage.setColor(Color.RED);
+        myImage.fillRect(1,1, health*pixelsPerHealthPoint, healthBarHeight);
+    }
+    
+
+public int getHealth() {
+    return health;    
+
+}
+
+
+public void act()
+    {
+     update();
+     //   checkCollision();
+    }
+    
+ 
+    
+    public void loseHealth()
+    {
+        health--;
+    }
+    public void update(){
+    }
+
+    private GreenfootImage GamerhealthBar = new GreenfootImage(100, 10);
+}

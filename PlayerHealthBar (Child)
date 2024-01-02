@@ -1,0 +1,59 @@
+public class playerhealthbar extends HealthBar
+
+
+{
+    /**
+     * Act - do whatever the playerhealthbar wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    int count;
+    int Gamerhealth = 100; 
+    // time player has to move away from enemy before health reduces again
+    private final int PUNCH_TIMEOUT = 50;
+    public int punchTimer = 0;
+    private Boxing myworld;
+    HealthBar gamerHealthBar = new HealthBar();
+    
+public HealthBar getGamerHealthBar()
+{ 
+    return gamerHealthBar;
+}
+    
+ public void update()
+    {
+        setImage(new GreenfootImage(healthBarWidth + 2,healthBarHeight + 2));
+        GreenfootImage myImage = getImage();
+        myImage.setColor(Color.WHITE);
+        myImage.drawRect(0,0, healthBarWidth + 1, healthBarHeight + 1);
+        myImage.setColor(Color.RED);
+        myImage.fillRect(1,1, health*pixelsPerHealthPoint, healthBarHeight);
+    }
+    
+
+         public boolean hitbyEnemyStance()
+    {
+        Actor enemy = getOneIntersectingObject(Gamer.class);
+        System.out.println(punchTimer);
+        // enemy is overlapping with gamer
+        if (enemy != null) {
+            if (this.punchTimer == 0) {
+                // decrease health on the healthbar
+                loseHealth();
+
+                if (getHealth() <= 0) {
+                    System.out.println("Knock out! Game over.");
+                    Greenfoot.stop();
+                }
+                // reset timer
+                this.punchTimer = PUNCH_TIMEOUT;
+            } else {
+                // decrease timer by 1
+                this.punchTimer = this.punchTimer - 1;
+                return true;
+            }
+        } else {
+            this.punchTimer = PUNCH_TIMEOUT;
+        }
+        return false;
+}
+}

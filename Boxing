@@ -1,0 +1,84 @@
+public class Boxing extends World
+{
+ HealthBar gamerHealthBar = new HealthBar();
+ EnemyHealthBar enemyHealthBar = new EnemyHealthBar();
+ 
+ healthManager healthManager = new healthManager(this);
+ 
+public Boxing()
+    {   
+        super(1000, 800, 1); 
+    addObject(new EnemyStance(), getWidth()/2, getHeight()/2);
+    addObject(new Gamer(), getWidth()/2, getHeight()/2);
+    prepare();
+    }
+    
+public healthManager getHealthManager() {
+        return healthManager;
+    }
+    
+
+   private void prepare() {
+    // Creating the HealthBar for Gamer and Enemy
+    
+    
+    // Adding the HealthBars to the world
+    //addObject(gamerHealthBar, 100, 50);
+    //addObject(enemyHealthBar, getWidth() - 100, 50);
+}
+
+public HealthBar getGamerHealthBar()
+{ 
+    return gamerHealthBar;
+}
+
+public HealthBar getEnemyHealthBar() {
+        return enemyHealthBar;
+    }
+
+    
+public class BoxingWorld extends World {
+    private int roundTimer = 60 * 60; // 60 seconds * 60 frames per second
+    private int roundCount = 1;
+    private boolean roundOver = false;
+
+    public BoxingWorld() {
+        super(800, 600, 1); // Set the size of your world
+        prepare(); // Call your prepare method or set up your initial world state
+    }
+
+    public void act() {
+        if (!roundOver) {
+            updateTimer();
+            checkRoundEnd();
+        }
+    }
+
+    private void updateTimer() {
+        if (roundTimer > 0) {
+            roundTimer--;
+        } else {
+            roundTimer = 60 * 60; // Reset timer for the next round
+            roundCount++;
+            roundOver = true;
+
+            if (roundCount > 3) {
+                // All rounds completed, handle end of the game
+                // You may want to add specific logic here based on your game requirements.
+            }
+        }
+    }
+
+    private void checkRoundEnd() {
+        if (roundOver) {
+            // Handle end of the round (e.g., stop the game, display results, etc.)
+            // You may want to add specific logic here based on your game requirements.
+        }
+    }
+
+    private void prepare() {
+        // Your existing preparation code
+        // Add objects, initialize variables, etc.
+    }
+}
+}

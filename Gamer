@@ -1,0 +1,104 @@
+public class Gamer extends Actor {
+    int count;
+    int gamerhealth = 100; 
+    private HealthBar HealthBar;
+     
+    // time player has to move away from enemy before health reduces again
+    private final int PUNCH_TIMEOUT = 50;
+    public int punchTimer = 0;
+    private Boxing myworld;
+    healthManager healthManager;
+    
+    EnemyStance enemy; 
+
+    
+    public Gamer() {
+        setImage("gamer-removebg-preview (1).png");
+    }
+
+    public void act() {
+        handleMovement();
+        handlePunch();
+        hitbyEnemy();
+    }
+
+    
+    @Override
+    protected void addedToWorld(World world) { 
+        // get all the base stuff done first.
+        super.addedToWorld(world);
+        
+ 
+        Boxing homeWorld = (Boxing)world;
+        this.myworld = homeWorld;
+        healthManager = myworld.getHealthManager();
+    }
+    
+
+    private void handleMovement() {
+        if (Greenfoot.isKeyDown("left")) {
+            move(-2);
+        }
+        if (Greenfoot.isKeyDown("right")) {
+            move(2);
+        }
+        if (Greenfoot.isKeyDown("up")) {
+            setLocation(getX(), getY() - 2);
+        }
+        if (Greenfoot.isKeyDown("down")) {
+            setLocation(getX(), getY() + 2);
+        }
+    }
+
+    private void handlePunch() {
+        if (Greenfoot.isKeyDown("space")) {
+            setImage("gamer2-removebg-preview (1).png");
+        } else {
+            setImage("gamer-removebg-preview (1).png");
+        }
+    }
+
+    private void gamerPunch() {
+        if (Greenfoot.isKeyDown("space")) {
+            setImage("gamerPunch");
+        } else {
+            setImage("gamer.png");
+        }
+    }
+    
+    public void loseHealth()
+    {
+        gamerhealth--;
+    }
+    
+    public boolean hitbyEnemy(){
+        Actor enemy = getOneIntersectingObject(EnemyStance.class);
+        System.out.println(punchTimer);
+        // enemy is overlapping with gamer
+        if (enemy != null) {
+            if (this.punchTimer == 0) {
+                // decrease health on the healthbar
+                //Boxing.HealthBar.loseHealth();
+
+                //TODO: fix this so it calls loseHealth() on playerhealthbar
+                this.loseHealth();
+                System.out.println("lost health");
+            
+                if (gamerhealth <= 0) {
+                    System.out.println("Knock out! Game over.");
+                    Greenfoot.stop();
+                }
+                // reset timer
+                this.punchTimer = PUNCH_TIMEOUT;
+            } else {
+                // decrease timer by 1
+                this.punchTimer = this.punchTimer - 1;
+                return true;
+            }
+        } else {
+            this.punchTimer = PUNCH_TIMEOUT;
+        }
+        //getWorld().removeObject(Enemy); 
+        return false;
+    }
+}

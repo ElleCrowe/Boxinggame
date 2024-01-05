@@ -1,0 +1,62 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * Write a description of class healthManager here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+
+
+public class HealthManager extends Actor {
+    
+    private World world;
+    
+    private HealthBar enemyHealthBar = new HealthBar();
+    private HealthBar gamerHealthBar = new HealthBar();
+    
+    private int enemyHealth= 100;
+    private int gamerHealth = 100;
+    
+    public int getEnemyHealth(){
+        return enemyHealth;
+    }
+    public int getGamerHealth(){
+        return gamerHealth;
+    }
+    
+    public HealthManager(World world) {
+        this.world = world;
+        //
+        initalize();
+    }
+    
+    
+    public void initalize() {
+        world.addObject(enemyHealthBar, 400, 10);
+        world.addObject(gamerHealthBar, 200, 10);
+    }
+    
+    
+    public void updateEnemyhealth() {
+        enemyHealth--;
+        enemyHealthBar.setHealth(enemyHealth);
+        
+        if (enemyHealth <=0) {
+            //You win!
+            System.out.println("Knock out! Game over.");
+            Greenfoot.stop();
+        }
+    }
+    
+    public void updategamerHealth() {
+        gamerHealth--; 
+        gamerHealthBar.setHealth(gamerHealth);
+
+        if (gamerHealth <=0) {
+            //Game Over!
+            System.out.println("Knock out! Game over.");
+            Greenfoot.stop();
+        }
+    }
+}

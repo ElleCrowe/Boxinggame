@@ -1,4 +1,3 @@
-import javax.swing.plaf.basic.BasicSliderUI.ActionScroller;
 
 import greenfoot.*;
 

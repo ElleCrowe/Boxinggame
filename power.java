@@ -80,11 +80,12 @@ public class ChickenLeg extends PowerUps
 
 
 
+
 public class HealthBar extends Actor {
     private int HealthBar = 100;
-    private int HealthBarHeight;  //input how many pixels high the health bar will be
-    private int HealthBarWidth;   // input how many pixels wide HealthBar will be
-    private int pixelsPerHealthPoint = (int) HealthBarWidth/Health;
+    private int HealthBarHeight = 100;
+    private int HealthBarWidth = 10;
+    private int pixelsPerHealthPoint = (int) HealthBarWidth/health;
 
      public HealthBar(int barWidth, int barHeight) {
         healthBarWidth = barWidth;   // Set the width based on the dimensions
@@ -92,13 +93,15 @@ public class HealthBar extends Actor {
 
     
      public void act() {
-        // input additional behavior for the health bar here if need be
+        update();
     }
 
     public void loseHealth() {
-        health -= 5;
-        health = Math.max(0, health); // Math is there to ensure the health doesn't go below 0
-        updateImage();
+       healh--;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     private void updateImage() {
@@ -117,6 +120,8 @@ public class HealthBar extends Actor {
 
     }
      }
+
+
 
 
 
